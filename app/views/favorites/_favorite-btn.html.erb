@@ -1,0 +1,16 @@
+<% if user_signed_in? %>
+
+  <% unless @book.favorite_user(current_user.id).blank? %>
+    <%= link_to book_favorite_path(book_id: @book.id, id: @book.favorites[0].id), method: :delete, remote: true do %>
+      <div class="vertical_favorite">
+       <%= image_tag "icon_red_heart.png", size: '40x40' %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= link_to book_favorites_path(@book.id), method: :post, remote: true do %>
+      <div class="vertical_favorite">
+        <%= image_tag "icon_heart.png", size: '40x40' %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
