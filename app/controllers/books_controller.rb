@@ -5,7 +5,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @newbook = Book.new
     @book_comment = BookComment.new
-    @book_comments = @book.book_comments
+    @book_comments = @book.book_comments.order(created_at: :desc)
   end
 
   def index
@@ -20,7 +20,7 @@ class BooksController < ApplicationController
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @books = Book.all
-      render 'index'
+      render "index"
     end
   end
 
