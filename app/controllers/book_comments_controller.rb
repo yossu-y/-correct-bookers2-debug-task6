@@ -5,8 +5,11 @@ class BookCommentsController < ApplicationController
     @book = Book.find(params[:book_id])
     @book_comment = @book.comments.build(comment_params)
     @book_comment.user_id = current_user.id
-    @book_comment.save
-    render book_path(params[:book_id])
+    if @book_comment.save
+      redirect_to request.referer
+    else
+      redirect_to request.referer
+    end
     # @book_comment = current_user.book_comments.new(book_comment_params)
     # @book_comment.book_id = @book.id
     # if @book_comment.save
@@ -14,15 +17,17 @@ class BookCommentsController < ApplicationController
     # else
       # redirect_to book_path(@book), notice: "comment can't be blank"
     # end
-
   end
 
   def destroy
     # BookComment.find(params[:id]).destroy
     # redirect_to book_path(params[:book_id])
     @booke_comment = Comment.find(params[:id])
-    @book_comment.destroy
-    render book_path(params[:book_id])
+    if @book_comment.destroy
+      redirect_to request.referer
+    else
+      redirect_to request.referer
+    end
   end
 
   private
